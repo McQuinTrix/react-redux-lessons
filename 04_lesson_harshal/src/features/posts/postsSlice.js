@@ -101,6 +101,8 @@ export const selectAllPosts = (state) => state.posts.posts;
 export const getPostListStatus = (state) => state.posts.status;
 export const getPostListError = (state) => state.posts.error;
 
+export const selectPostById = (state, postId) => state.posts.posts.find((item) => item.id === postId);
+
 export const {
     addPost,
     updatePostReaction,
