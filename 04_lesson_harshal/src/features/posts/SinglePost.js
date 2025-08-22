@@ -3,12 +3,14 @@ import {selectPostById} from "./postsSlice";
 import PostAuthor from "./PostAuthor";
 import TimeAgo from "./TimeAgo";
 import PostReaction from "./PostReaction";
+import {useParams} from "react-router-dom";
 
 const SinglePost = () => {
 
-    // TODO: retrieve post id
+    const { postId } = useParams();
+    debugger
 
-    const post = useSelector((state) => selectPostById(state, postId));
+    const post = useSelector((state) => selectPostById(state, Number(postId)));
 
     if (!post) {
         return (
@@ -30,3 +32,5 @@ const SinglePost = () => {
         </article>
     )
 }
+
+export default SinglePost;
