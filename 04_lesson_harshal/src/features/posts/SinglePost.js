@@ -3,7 +3,7 @@ import {selectPostById} from "./postsSlice";
 import PostAuthor from "./PostAuthor";
 import TimeAgo from "./TimeAgo";
 import PostReaction from "./PostReaction";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 const SinglePost = () => {
 
@@ -25,6 +25,7 @@ const SinglePost = () => {
             <h2>{post.title}</h2>
             <p>{post.body}</p>
             <p className='postCredit'>
+                <Link to={`/post/edit/${postId}`}>Edit Post</Link>
                 <PostAuthor userId={post.userId} />
                 <TimeAgo timestamp={post.date}></TimeAgo>
             </p>

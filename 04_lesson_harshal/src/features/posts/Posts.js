@@ -32,7 +32,6 @@ const Posts = () => {
 
 
     return <section>
-        Posts List
         {
             content
         }
