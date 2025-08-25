@@ -27,6 +27,36 @@ export const addPostV2 = createAsyncThunk(
         return response.data;
     })
 
+export const updatePost = createAsyncThunk(
+    'posts/updatePost',
+    async (updatedPost) => {
+        const { id } = updatedPost;
+        try {
+            const response = await axios.put(`${POSTS_URL}/${id}`, updatedPost);
+            return response.data;
+        } catch (e) {
+            return e.message;
+        }
+    }
+)
+
+export const deletePost = createAsyncThunk(
+    'posts/deletePost',
+    async (id) => {
+        try {
+            const resp = await axios.delete(`${POSTS_URL}/${id}`);
+            debugger;
+            if (resp.status === 200) {
+                return id;
+            } else {
+                return `${resp?.status}: ${resp?.statusText}`
+            }
+        } catch (e) {
+            return e.message;
+        }
+    }
+)
+
 const initialState = {
     posts: [],
     status: 'idle',
@@ -94,6 +124,30 @@ const postsSlice = createSlice({
                     reactions: Reaction(),
                 })
             })
+            .addCase(updatePost.fulfilled, (state, action) => {
+                if (!action.payload.id) {
+                    return
+                }
+                const filteredPosts = state.posts.filter((item) => item.id !== action.payload.id);
+                state.posts = [
+                    ...filteredPosts,
+                    {
+                        ...action.payload,
+                        date: new Date().toISOString(),
+                    }
+                ]
+            })
+            .addCase(deletePost.fulfilled, (state, action) => {
+                debugger
+                if (!action.payload) {
+                    console.log('deletion not complete');
+                    return
+                }
+                const posts = state.posts.filter((item) => item.id != action.payload)
+                state.posts = posts;
+                console.log(state.posts);
+                debugger;
+            })
     }
 })
 
@@ -104,7 +158,6 @@ export const getPostListError = (state) => state.posts.error;
 export const selectPostById = (state, postId) => state.posts.posts.find((item) => item.id === postId);
 
 export const {
-    addPost,
     updatePostReaction,
 } = postsSlice.actions;
 

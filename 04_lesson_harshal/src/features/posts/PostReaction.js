@@ -13,7 +13,6 @@ const PostReaction = ({ postReactions, postId }) => {
     const dispatch = useDispatch();
 
     const onReactionClick = (reactionName) => {
-        debugger
         dispatch(
             updatePostReaction({
                 postId,

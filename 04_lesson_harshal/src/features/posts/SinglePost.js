@@ -6,9 +6,7 @@ import PostReaction from "./PostReaction";
 import {Link, useParams} from "react-router-dom";
 
 const SinglePost = () => {
-
     const { postId } = useParams();
-    debugger
 
     const post = useSelector((state) => selectPostById(state, Number(postId)));
 
@@ -23,9 +21,9 @@ const SinglePost = () => {
     return (
         <article>
             <h2>{post.title}</h2>
-            <p>{post.body}</p>
+            <p>{post.content}</p>
             <p className='postCredit'>
-                <Link to={`/post/edit/${postId}`}>Edit Post</Link>
+                <Link to={`/post/${postId}/edit`}>Edit Post</Link>
                 <PostAuthor userId={post.userId} />
                 <TimeAgo timestamp={post.date}></TimeAgo>
             </p>
