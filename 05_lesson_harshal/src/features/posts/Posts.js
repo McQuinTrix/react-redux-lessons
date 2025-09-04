@@ -1,9 +1,9 @@
 import { useSelector} from "react-redux";
-import { getPostListError, getPostListStatus, selectAllPosts} from "./postsSlice";
+import { getPostListError, getPostListStatus, selectPostIds } from "./postsSlice";
 import PostListItem from "./PostListItem";
 
 const Posts = () => {
-    const postList = useSelector(selectAllPosts);
+    const postIdList = useSelector(selectPostIds);
     const postStatus = useSelector(getPostListStatus);
     const postListError = useSelector(getPostListError);
     let content = '';
@@ -11,11 +11,8 @@ const Posts = () => {
     if (postStatus === 'loading') {
         content = `Loading`;
     } else if (postStatus === 'success') {
-        const sortedList = postList.slice()
-            .sort((a, b) => b.date.localeCompare(a.date));
-
-        content = sortedList.map((item) => {
-            return <PostListItem key={item.id} post={item} />
+        content = postIdList.map((item) => {
+            return <PostListItem key={item} postId={item} />
         })
 
     } else if (postStatus === 'error') {
